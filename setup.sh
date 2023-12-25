@@ -72,23 +72,14 @@ installDepend() {
     fi
 }
 
-getLatestMesloURL() {
-    ## Get the latest version of the Meslo nerd fonts
-    ## You can replace 'MesloLGS NF Regular' with another font name if needed.
-    latest_url=$(curl -s https://github.com/ryanoasis/nerd-fonts/find/master | grep "MesloLGS NF Regular" | head -n 1 | cut -d'"' -f2)
-    echo "$latest_url"
-}
-
 installMeslo() {
     ## Download the latest version of the Meslo nerd fonts
     current_dir=$(pwd)
     cd ~
-    latest_url=$(getLatestMesloURL)
-    wget "$latest_url"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Meslo.zip
     mkdir -p .local/share/fonts
     unzip Meslo.zip -d .local/share/fonts
     cd .local/share/fonts
-    rm *Windows*
     cd ~
     rm Meslo.zip
     fc-cache -fv
