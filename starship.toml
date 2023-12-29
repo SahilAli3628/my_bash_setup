@@ -1,7 +1,8 @@
 format = """
 [](#3B4252)\
-$python\
 $username\
+[🃏](bg:#3B4252 fg:#3B4252)\
+$python\
 [](bg:#434C5E fg:#3B4252)\
 $directory\
 [](fg:#434C5E bg:#4C566A)\
@@ -20,6 +21,8 @@ $nim\
 $rust\
 [](fg:#86BBD8 bg:#06969A)\
 $docker_context\
+$helm\
+$kubernetes\
 [](fg:#06969A bg:#33658A)\
 $time\
 [ ](fg:#33658A)\
@@ -48,6 +51,7 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
+read_only = " "
 # Keep in mind that the order matters. For example:
 # "Important Documents" = "  "
 # will not be replaced, because "Documents" was already substituted before.
@@ -113,10 +117,20 @@ symbol = " "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
+#[python]
+#symbol = "🐍 "
+#style = "bg:#3B4252"
+#format = '[(\($virtualenv\) ) $symbol ]($style)'
+
 [python]
-symbol = "🐍 "
+symbol = " "
+#pyenv_version_name = true
 style = "bg:#3B4252"
-format = '[(\($virtualenv\) ) $symbol ]($style)'
+format = '[ via ${symbol}python (${version} )(\($virtualenv\) )]($style)'
+pyenv_prefix = "venv "
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+detect_extensions = ["py"]
+version_format = "v${raw}"
 
 [rust]
 symbol = ""
@@ -128,3 +142,28 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#33658A"
 format = '[ $time ]($style)'
+
+[aws]
+symbol = "  "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[package]
+symbol = " "
+
+[helm]
+disabled = false
+format = "via [$symbol$version]($style) "
+symbol = "⎈ "
+style = "bold white"
+
+[kubernetes]
+disabled = true
+symbol = "☸ "
+format = '[$symbol$context( \($namespace\))]($style) in '
+style = "cyan bold"
+

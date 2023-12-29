@@ -74,6 +74,12 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 #######################################################
+# Fedora ALIAS'S
+#######################################################
+# use dnf5 instead of dnf for fedora39+
+alias dnf='dnf5'
+
+#######################################################
 # GENERAL ALIAS'S
 #######################################################
 # To temporarily bypass an alias, we precede the command with a \
