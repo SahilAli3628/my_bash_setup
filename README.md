@@ -4,3 +4,5 @@ This  repo has the scripts I have written to setup my bash shell. Setup inspired
 just run ./setup.sh
 
 once installed, please change the terminal font to something from Meslo Nerd Fonts
+
+FYI, dracula.sh is not yet complete

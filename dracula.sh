@@ -1,0 +1,108 @@
+#!/bin/bash
+
+RC='\e[0m'
+RED='\e[31m'
+YELLOW='\e[33m'
+GREEN='\e[32m'
+
+command_exists() {
+    command -v $1 >/dev/null 2>&1
+}
+
+checkEnv() {
+    ## Check for requirements.
+    REQUIREMENTS='curl groups sudo'
+    if ! command_exists ${REQUIREMENTS}; then
+        echo -e "${RED}To run me, you need: ${REQUIREMENTS}${RC}"
+        exit 1
+    fi
+
+    ## Check Package Handeler
+    PACKAGEMANAGER='apt yum dnf pacman zypper'
+    for pgm in ${PACKAGEMANAGER}; do
+        if command_exists ${pgm}; then
+            PACKAGER=${pgm}
+            echo -e "Using ${pgm}"
+        fi
+    done
+
+    if [ -z "${PACKAGER}" ]; then
+        echo -e "${RED}Can't find a supported package manager"
+        exit 1
+    fi
+
+    ## Check if the current directory is writable.
+    GITPATH="$(dirname "$(realpath "$0")")"
+    if [[ ! -w ${GITPATH} ]]; then
+        echo -e "${RED}Can't write to ${GITPATH}${RC}"
+        exit 1
+    fi
+
+    ## Check SuperUser Group
+    SUPERUSERGROUP='wheel sudo root'
+    for sug in ${SUPERUSERGROUP}; do
+        if groups | grep ${sug}; then
+            SUGROUP=${sug}
+            echo -e "Super user group ${SUGROUP}"
+        fi
+    done
+
+    ## Check if member of the sudo group.
+    if ! groups | grep ${SUGROUP} >/dev/null; then
+        echo -e "${RED}You need to be a member of the sudo group to run me!"
+        exit 1
+    fi
+}
+
+installDepend() {
+    ## Check for dependencies.
+    DEPENDENCIES='wget'
+    echo -e "${YELLOW}Installing dependencies...${RC}"
+    if [[ $PACKAGER == "pacman" ]]; then
+        if ! command_exists yay; then
+            echo "Installing yay..."
+            sudo ${PACKAGER} --noconfirm -S base-devel
+            $(cd /opt && sudo git clone https://aur.archlinux.org/yay-git.git && sudo chown -R ${USER}:${USER} ./yay-git && cd yay-git && makepkg --noconfirm -si)
+        else
+            echo "Command yay already installed"
+        fi
+    	yay --noconfirm -S ${DEPENDENCIES}
+    else 
+    	sudo ${PACKAGER} install -yq ${DEPENDENCIES}
+    fi
+}
+
+installDracula() {
+    ## install dracula theme for fzf
+    echo "export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
+" >> ~/.bashrc
+
+    ## install dracula theme for gnome-terminal  
+    git clone https://github.com/dracula/gnome-terminal
+    cd gnome-terminal
+    ./install.sh
+    cd ..
+    rm -rf gnome-terminal
+
+    ##install dracula theme for GTK and icons
+    current_dir=$(pwd)
+    cd ~
+    wget https://github.com/dracula/gtk/files/5214870/Dracula.zip
+    wget https://github.com/dracula/gtk/archive/master.zip
+    mkdir -p /usr/share/themes/
+    mkdir -p /usr/share/icons/
+    unzip master.zip -d /usr/share/themes/
+    unzip Dracula.zip -d /usr/share/icons/
+    gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
+    gsettings set org.gnome.desktop.wm.preferences theme "Dracula"
+    gsettings set org.gnome.desktop.interface icon-theme "Dracula"
+    rm Dracula.zip master.zip
+    cd "$current_dir"
+
+    ## source bashrc
+    source ${USER_HOME}/.bashrc
+}
+
+checkEnv
+installDepend
+installDracula
