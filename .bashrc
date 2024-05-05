@@ -74,12 +74,6 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 #######################################################
-# Fedora ALIAS'S
-#######################################################
-# use dnf5 instead of dnf for fedora39+
-alias dnf='dnf5'
-
-#######################################################
 # GENERAL ALIAS'S
 #######################################################
 # To temporarily bypass an alias, we precede the command with a \
@@ -91,6 +85,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Edit this .bashrc file
 alias ebrc='edit ~/.bashrc'
+
+# source this .bashrc file
+alias sbrc='source ~/.bashrc'
 
 # Show help for this .bashrc file
 alias hlp='less ~/.bashrc_help'
@@ -598,7 +595,18 @@ else
 	echo "can't found the autojump script"
 fi
 
-source /usr/share/fzf/shell/key-bindings.bash
-export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
+#######################################################
+# FZF setup
+#######################################################
 
-cat MyNameAsciiArt
+#For Fedora:
+#source /usr/share/fzf/shell/key-bindings.bash
+
+#For Ubuntu
+source /usr/share/doc/fzf/examples/key-bindings.bash
+
+#fzf theme
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
+--color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
+--color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
