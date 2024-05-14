@@ -86,14 +86,17 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # Edit this .bashrc file
 alias ebrc='edit ~/.bashrc'
 
-# source this .bashrc file
+# Source this .bashrc file
 alias sbrc='source ~/.bashrc'
 
 # Show help for this .bashrc file
 alias hlp='less ~/.bashrc_help'
 
-# alias to show the date
+# Alias to show the date
 alias da='date "+%d-%m-%Y %A %T %Z"'
+
+# Use batcat as bat
+alias bat='batcat'
 
 # Alias's to modified commands
 alias cp='cp -i'
