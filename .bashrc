@@ -84,9 +84,9 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Edit this .bashrc file
-alias ebrc='edit ~/.bashrc'
+alias ebrc='nvim ~/.bashrc'
 
-# Source this .bashrc file
+# Edit this .bashrc file
 alias sbrc='source ~/.bashrc'
 
 # Show help for this .bashrc file
@@ -609,7 +609,7 @@ fi
 source /usr/share/doc/fzf/examples/key-bindings.bash
 
 #fzf theme
-export FZF_DEFAULT_OPTS=" \
+#export FZF_DEFAULT_OPTS=" \
 --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
 --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
