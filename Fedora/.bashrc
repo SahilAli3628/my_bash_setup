@@ -119,9 +119,6 @@ alias ebrc='nvim ~/.bashrc'
 # Source this .bashrc file
 alias sbrc='source ~/.bashrc'
 
-# Use batcat as bat
-alias bat='batcat'
-
 # Show help for this .bashrc file
 alias hlp='less ~/.bashrc_help'
 
@@ -408,13 +405,6 @@ distribution () {
 
 
 DISTRIBUTION=$(distribution)
-if command -v bat &> /dev/null || command -v batcat &> /dev/null; then
-    if [ "$DISTRIBUTION" = "redhat" ] || [ "$DISTRIBUTION" = "arch" ]; then
-        alias cat='bat'
-    else
-        alias cat='batcat'
-    fi
-fi
 
 # Show the current version of the operating system
 ver() {
