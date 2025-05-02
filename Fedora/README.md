@@ -1,4 +1,4 @@
-#TO-DO
+# TO-DO
 - ~Setup nvim~
 - ~Setup the terminal (kitty/ghostty. bashrc, tmux, starship)~
 - ~Setup dev env for go and python~
@@ -6,4 +6,4 @@
 - Document if anything important
 
 
-###Note: The nvim, ghostty and starship.toml will reside in ~/.config/ path
+### Note: The nvim, ghostty and starship.toml will reside in ~/.config/ path
